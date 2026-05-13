@@ -11,6 +11,7 @@ const VAULT = join(ROOT, "docs");
 const DIST = join(ROOT, "dist");
 const STYLES_SRC = join(import.meta.dir, "styles");
 const SCRIPTS_SRC = join(import.meta.dir, "scripts");
+const PUBLIC_SRC = join(import.meta.dir, "public");
 const MENU_PATH = join(VAULT, "system", "menu.json");
 
 const SKIP_DIRS = new Set([
@@ -99,6 +100,16 @@ async function build() {
     await cp(SCRIPTS_SRC, join(DIST, "scripts"), { recursive: true });
   } catch {
     // scripts dir is optional
+  }
+  // Copy everything in grove/public/ to dist/ root (favicons, robots.txt overrides, etc.)
+  try {
+    const entries = await readdir(PUBLIC_SRC, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.name === "README.md") continue;
+      await cp(join(PUBLIC_SRC, entry.name), join(DIST, entry.name), { recursive: true });
+    }
+  } catch {
+    // public dir is optional
   }
 
   const files = await collectMarkdown(VAULT);

@@ -9,6 +9,10 @@ export interface Menu {
   title: string;
   base: string;
   home?: string;
+  description?: string;
+  image?: string;
+  twitter?: string;
+  noindex?: boolean;
   items: MenuItem[];
 }
 

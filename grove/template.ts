@@ -119,13 +119,15 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
-function renderSeoMeta(page: Page): string {
+function renderSeoMeta(page: Page, menu: Menu): string {
   const seoTitle = page.seo?.title ?? page.title;
-  const seoDescription = page.seo?.description ?? page.description;
+  const seoDescription = page.seo?.description ?? page.description ?? menu.description;
   const canonical = page.seo?.canonical;
-  const image = page.seo?.image;
+  const image = page.seo?.image ?? menu.image;
   const keywords = page.seo?.keywords;
-  const noindex = page.seo?.noindex ?? true;
+  const noindex = page.seo?.noindex ?? menu.noindex ?? true;
+  const siteName = menu.title;
+  const twitterSite = menu.twitter;
 
   return [
     seoDescription
@@ -138,6 +140,7 @@ function renderSeoMeta(page: Page): string {
     canonical
       ? `<link rel="canonical" href="${escapeHtml(canonical)}">`
       : "",
+    `<meta property="og:site_name" content="${escapeHtml(siteName)}">`,
     `<meta property="og:title" content="${escapeHtml(seoTitle)}">`,
     seoDescription
       ? `<meta property="og:description" content="${escapeHtml(seoDescription)}">`
@@ -146,6 +149,7 @@ function renderSeoMeta(page: Page): string {
     canonical ? `<meta property="og:url" content="${escapeHtml(canonical)}">` : "",
     image ? `<meta property="og:image" content="${escapeHtml(image)}">` : "",
     `<meta name="twitter:card" content="${image ? "summary_large_image" : "summary"}">`,
+    twitterSite ? `<meta name="twitter:site" content="${escapeHtml(twitterSite)}">` : "",
     `<meta name="twitter:title" content="${escapeHtml(seoTitle)}">`,
     seoDescription
       ? `<meta name="twitter:description" content="${escapeHtml(seoDescription)}">`
@@ -162,8 +166,9 @@ function renderSeoMeta(page: Page): string {
 export function render(page: Page, menu: Menu, listing?: ListingContext): string {
   const prefix = relativePrefix(page.slug);
   const seoTitle = page.seo?.title ?? page.title;
-  const documentTitle = `${seoTitle} — ${menu.title}`;
-  const seoMeta = renderSeoMeta(page);
+  const isHome = menu.home && slugifyPath(menu.home).toLowerCase() === page.slug.toLowerCase();
+  const documentTitle = isHome ? menu.title : `${seoTitle} | ${menu.title}`;
+  const seoMeta = renderSeoMeta(page, menu);
 
   let content = page.content;
   if (listing && listing.children.length > 0) {
@@ -175,7 +180,7 @@ export function render(page: Page, menu: Menu, listing?: ListingContext): string
     .replace("{{seo_meta}}", seoMeta)
     .replace(/\{\{title\}\}/g, escapeHtml(page.title))
     .replace(/\{\{site_title\}\}/g, escapeHtml(menu.title))
-    .replace("{{base}}", prefix)
+    .replace(/\{\{base\}\}/g, prefix)
     .replace("{{css_path}}", `${prefix}styles/main.css`)
     .replace("{{js_path}}", `${prefix}scripts/app.js`)
     .replace("{{nav}}", renderNav(menu, page.slug))

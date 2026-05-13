@@ -1,5 +1,8 @@
 {
   "title": "overment.ai",
+  "description": "Everything I know.",
+  "image": "https://cloud.overment.com/overment-1752861357.jpg",
+  "twitter": "@_overment",
   "base": "/",
   "home": "What is this?",
   "items": [
