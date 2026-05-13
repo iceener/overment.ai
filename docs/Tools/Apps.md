@@ -28,7 +28,6 @@ This is the latest (Q2 2026) list of apps I use:
 ## Creativity & Design
 
 - [Figma](https://figma.com/): where I design interfaces
-- [Framer](https://framer.com/): no-code website builder
 - [Procreate](https://apps.apple.com/us/app/procreate/id425073498): drawing app for iPad
 - [Screenflow](http://www.telestream.net/screenflow/overview.htm): how I record courses
 - [Screen Studio](https://screen.studio/): tool for recording short-form videos
@@ -42,7 +41,6 @@ This is the latest (Q2 2026) list of apps I use:
 ## Notes, Knowledge & Organization
 
 - [Obsidian](https://obsidian.md): my go-to for notes and operational memory for Alice
-- [Airtable](https://airtable.com/): basically Excel but cooler, I use it for automation
 
 ## Health & Wellbeing
 
