@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <style>
+    /* Inline critical paint colors so the page never flashes white in dark mode,
+       even before the main stylesheet loads. */
+    :root { color-scheme: light dark; background: #fafaf7; }
+    @media (prefers-color-scheme: dark) {
+      :root { background: #0b0b0d; }
+    }
+  </style>
+  <title>{{document_title}}</title>
+  {{seo_meta}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/github.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.10.0/build/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="{{css_path}}">
+  <script src="{{js_path}}" defer></script>
+</head>
+<body>
+  <nav>
+    <a href="{{base}}index.html" class="site-title">{{site_title}}</a>
+    <div class="nav-links">
+      {{nav}}
+    </div>
+  </nav>
+  <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "where": { "and": [{ "href_matches": "/*" }, { "not": { "selector_matches": "[rel~=external]" } }] },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+  </script>
+  <main>
+    <h1>{{title}}</h1>
+    {{content}}
+  </main>
+</body>
+</html>

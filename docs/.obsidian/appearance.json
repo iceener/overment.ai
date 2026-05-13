@@ -1,0 +1,10 @@
+{
+  "accentColor": "",
+  "cssTheme": "Mado Miniflow",
+  "enabledCssSnippets": [
+    "typography-system",
+    "ui-enhancements"
+  ],
+  "monospaceFontFamily": "IBM Plex Mono",
+  "textFontFamily": "Lexend"
+}

@@ -1,0 +1,14 @@
+{
+  "title": "overment.ai",
+  "base": "/",
+  "home": "What is this?",
+  "items": [
+    { "label": "Me", "path": "/Me" },
+    { "label": "Concepts", "path": "/Concepts", "visible": false },
+    { "label": "Projects", "path": "/Projects" },
+    { "label": "Tools", "path": "/Tools" },
+    { "label": "Mental Models", "path": "/Mental-Models", "visible": false },
+    { "label": "Books", "path": "/Books", "visible": false },
+    { "label": "Lab", "path": "/Lab" }
+  ]
+}
