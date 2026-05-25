@@ -7,7 +7,7 @@
   "home": "What is this?",
   "items": [
     { "label": "Me", "path": "/Me" },
-    { "label": "Concepts", "path": "/Concepts", "visible": false },
+    { "label": "Concepts", "path": "/Concepts" },
     { "label": "Projects", "path": "/Projects" },
     { "label": "Tools", "path": "/Tools" },
     { "label": "Mental Models", "path": "/Mental-Models", "visible": false },

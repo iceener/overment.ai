@@ -31,8 +31,9 @@ function renderListingItems(children: Page[], fromSlug: string): string {
         ? `<span class="listing-desc">${escapeHtml(child.description)}</span>`
         : "";
       const metaParts: string[] = [];
-      if (child.date) {
-        metaParts.push(`<time class="listing-date">${escapeHtml(child.date)}</time>`);
+      const displayDate = child.date ?? child.updatedAt;
+      if (displayDate) {
+        metaParts.push(`<time class="listing-date">${escapeHtml(displayDate)}</time>`);
       }
       if (child.tags && child.tags.length > 0) {
         const tagHtml = child.tags

@@ -31,6 +31,9 @@ export interface Page {
   content: string;
   description?: string;
   date?: string;
+  updatedAt?: string;
+  fileUpdatedAt?: string;
+  order?: number;
   template?: string;
   seo?: PageSeo;
   published: boolean;

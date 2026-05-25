@@ -12,6 +12,17 @@
       :root { background: #0b0b0d; }
     }
   </style>
+  <script>
+    /* Apply persisted column width before first paint to avoid layout jump. */
+    (() => {
+      try {
+        const stored = parseFloat(localStorage.getItem("overment.contentWidth") || "");
+        if (!Number.isFinite(stored)) return;
+        const clamped = Math.max(36, Math.min(68, stored));
+        document.documentElement.style.setProperty("--content-width", `${clamped.toFixed(2)}rem`);
+      } catch {}
+    })();
+  </script>
   <title>{{document_title}}</title>
   {{seo_meta}}
   <link rel="apple-touch-icon" sizes="180x180" href="{{base}}favicons/apple-touch-icon.png">

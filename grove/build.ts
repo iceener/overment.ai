@@ -1,4 +1,4 @@
-import { readdir, rm, mkdir, cp } from "node:fs/promises";
+import { readdir, rm, mkdir, cp, stat } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { parse, filePathToSlug, slugifySegment, slugifyPath, humanize } from "./markdown";
 import { render, type ListingContext } from "./template";
@@ -66,11 +66,27 @@ async function collectAssets(dir: string): Promise<string[]> {
   return files;
 }
 
+function newestFirst(aDate?: string, bDate?: string): number {
+  if (aDate && bDate) return bDate.localeCompare(aDate);
+  if (aDate) return -1;
+  if (bDate) return 1;
+  return 0;
+}
+
 function sortPages(pages: Page[]): Page[] {
   return [...pages].sort((a, b) => {
-    if (a.date && b.date) return b.date.localeCompare(a.date);
-    if (a.date) return -1;
-    if (b.date) return 1;
+    if (a.order !== undefined || b.order !== undefined) {
+      if (a.order === undefined) return 1;
+      if (b.order === undefined) return -1;
+      if (a.order !== b.order) return a.order - b.order;
+    }
+
+    const recencyCompare = newestFirst(
+      a.updatedAt ?? a.fileUpdatedAt ?? a.date,
+      b.updatedAt ?? b.fileUpdatedAt ?? b.date,
+    );
+    if (recencyCompare !== 0) return recencyCompare;
+
     return a.title.localeCompare(b.title);
   });
 }
@@ -114,6 +130,11 @@ async function build() {
 
   const files = await collectMarkdown(VAULT);
   const assetFiles = await collectAssets(VAULT);
+  const fileUpdatedAtMap = new Map<string, string>();
+  for (const file of files) {
+    const stats = await stat(file);
+    fileUpdatedAtMap.set(file, stats.mtime.toISOString());
+  }
 
   // Basename → slug for Obsidian-style [[Name]] resolution.
   // Aliases are added in a second pass below so they don't shadow real basenames.
@@ -140,7 +161,11 @@ async function build() {
   const pages: Page[] = [];
   for (const file of files) {
     const raw = await Bun.file(file).text();
-    const page = parse(relative(VAULT, file), raw, { basenameMap, assetMap });
+    const page = parse(relative(VAULT, file), raw, {
+      basenameMap,
+      assetMap,
+      fileUpdatedAt: fileUpdatedAtMap.get(file),
+    });
     if (page.published) {
       pages.push(page);
     } else {
@@ -162,7 +187,11 @@ async function build() {
   pages.length = 0;
   for (const file of files) {
     const raw = await Bun.file(file).text();
-    const page = parse(relative(VAULT, file), raw, { basenameMap, assetMap });
+    const page = parse(relative(VAULT, file), raw, {
+      basenameMap,
+      assetMap,
+      fileUpdatedAt: fileUpdatedAtMap.get(file),
+    });
     if (page.published) pages.push(page);
   }
 

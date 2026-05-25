@@ -43,6 +43,13 @@ function asBoolean(value: unknown): boolean | undefined {
   return undefined;
 }
 
+function asDateString(value: unknown): string | undefined {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.toISOString().slice(0, 10);
+  }
+  return asString(value);
+}
+
 function asStringArray(value: unknown): string[] | undefined {
   if (!Array.isArray(value)) return undefined;
   const parsed = value
@@ -376,6 +383,7 @@ function parseSeo(data: Record<string, unknown>): PageSeo | undefined {
 export interface ParseOptions {
   basenameMap?: Map<string, string>;
   assetMap?: Map<string, string>;
+  fileUpdatedAt?: string;
 }
 
 export function parse(filepath: string, raw: string, options: ParseOptions = {}): Page {
@@ -395,11 +403,13 @@ export function parse(filepath: string, raw: string, options: ParseOptions = {})
     slug,
     title: data.title ?? fallbackTitleFromPath(filepath),
     description: asString(data.description) ?? extractExcerpt(content),
-    date: data.date instanceof Date
-      ? data.date.toISOString().slice(0, 10)
-      : typeof data.date === "string"
-        ? data.date
-        : undefined,
+    date: asDateString(metadata.date),
+    updatedAt:
+      asDateString(metadata.updated_at) ??
+      asDateString(metadata.updatedAt) ??
+      asDateString(metadata.updated),
+    fileUpdatedAt: options.fileUpdatedAt,
+    order: asNumber(metadata.order) ?? asNumber(metadata.sort_order),
     template: asString(data.template),
     seo,
     published: publish !== false && !draft,
