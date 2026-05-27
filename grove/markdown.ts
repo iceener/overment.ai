@@ -3,6 +3,7 @@ import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
 import matter from "gray-matter";
 import { posix } from "node:path";
+import { renderShortcodes } from "./shortcodes";
 import type { Page, PageSeo } from "./types";
 
 const marked = new Marked(
@@ -390,10 +391,12 @@ export function parse(filepath: string, raw: string, options: ParseOptions = {})
   const { data, content } = matter(raw);
   const metadata = data as Record<string, unknown>;
   const slug = filePathToSlug(filepath);
-  const source = rewriteMarkdownMdLinks(
-    rewriteWikiLinks(content, filepath, slug, options.basenameMap, options.assetMap),
-    filepath,
-    slug,
+  const source = renderShortcodes(
+    rewriteMarkdownMdLinks(
+      rewriteWikiLinks(content, filepath, slug, options.basenameMap, options.assetMap),
+      filepath,
+      slug,
+    ),
   );
   const publish = asBoolean(metadata.publish);
   const draft = asBoolean(metadata.draft) ?? false;

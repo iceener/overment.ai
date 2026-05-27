@@ -13,6 +13,7 @@ const STYLES_SRC = join(import.meta.dir, "styles");
 const SCRIPTS_SRC = join(import.meta.dir, "scripts");
 const PUBLIC_SRC = join(import.meta.dir, "public");
 const MENU_PATH = join(VAULT, "system", "menu.json");
+const DEFAULT_NEWSLETTER_ENDPOINT = "https://alice.overment.com/api/newsletter/subscribe";
 
 const SKIP_DIRS = new Set([
   ".git",
@@ -21,6 +22,7 @@ const SKIP_DIRS = new Set([
   "grove",
   "dist",
   "node_modules",
+  "private",
   "system",
 ]);
 
@@ -104,6 +106,19 @@ async function writeFile(outPath: string, html: string): Promise<void> {
   await Bun.write(outPath, html);
 }
 
+async function writePublicEnvScript(): Promise<void> {
+  const newsletterEndpoint = Bun.env.PUBLIC_NEWSLETTER_ENDPOINT?.trim() || DEFAULT_NEWSLETTER_ENDPOINT;
+  const publicEnv = {
+    NEWSLETTER_ENDPOINT: newsletterEndpoint,
+  };
+
+  await mkdir(join(DIST, "scripts"), { recursive: true });
+  await Bun.write(
+    join(DIST, "scripts", "env.js"),
+    `window.OVERMENT_ENV = ${JSON.stringify(publicEnv, null, 2)};\n`,
+  );
+}
+
 async function build() {
   const start = performance.now();
 
@@ -117,6 +132,7 @@ async function build() {
   } catch {
     // scripts dir is optional
   }
+  await writePublicEnvScript();
   // Copy everything in grove/public/ to dist/ root (favicons, robots.txt overrides, etc.)
   try {
     const entries = await readdir(PUBLIC_SRC, { withFileTypes: true });

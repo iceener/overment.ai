@@ -30,6 +30,8 @@ jobs:
         run: bun install --frozen-lockfile || bun install
 
       - name: Build site
+        env:
+          PUBLIC_NEWSLETTER_ENDPOINT: ${{ vars.PUBLIC_NEWSLETTER_ENDPOINT }}
         run: bun run build
 
       - name: Configure Pages

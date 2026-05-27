@@ -7,7 +7,7 @@ const DIST = join(ROOT, "dist");
 const BUILD = join(import.meta.dir, "build.ts");
 const PORT = Number(process.env.PORT ?? 3000);
 
-const SKIP = /(?:^|\/)(?:\.git|\.github|\.obsidian|node_modules|dist|\.DS_Store)(?:\/|$)/;
+const SKIP = /(?:^|\/)(?:\.git|\.github|\.obsidian|node_modules|dist|private|\.DS_Store)(?:\/|$)/;
 
 let building = false;
 let pending = false;
