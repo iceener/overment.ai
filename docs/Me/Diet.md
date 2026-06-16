@@ -1,72 +1,101 @@
-This note keeps my eating simple, filling, and sustainable. The goal is better eating without overcomplicating it, built around meals that are high in protein, easy to prepare, and realistic to repeat.
+This file is the control panel for how I eat by default. Daily eating details live in session files. This file should stay simple enough to scan when I am tired, hungry, or planning groceries.
 
-## Overview
+## Purpose
 
-The point of this diet is not to create a strict system or overengineer food. It is to make eating simpler, more consistent, and more supportive of training and everyday energy. The plan is based on meals that are filling, protein-forward, and easy to prepare with ingredients I can keep around without much friction.
+Eat in a way that supports training, recovery, energy, and hunger control without making food complicated.
 
-## Goal
+The default direction:
 
-The main goal is to eat better without making food complicated. That means choosing meals that help with strength, recovery, energy, and consistency while staying realistic enough to repeat. I want a structure that supports training, keeps hunger under control, and makes it easier to stay on track even on normal or low-effort days.
+| Priority | Meaning |
+| --- | --- |
+| High protein | Each bigger meal should have a clear protein source. |
+| Enough energy | Carbs are useful, especially around training and higher activity. |
+| Fresh food | Add fruit or vegetables daily. Vegetables are the easiest part to miss. |
+| Low friction | Meals should be easy to prepare and realistic to repeat. |
+| Repeatable ingredients | Keep the same useful foods around instead of reinventing meals every day. |
 
-## Meals
+## Meal system
 
-| Meal | Default version | Notes |
-| --- | --- | --- |
-| Breakfast / shake | banana + mango + yogurt + nuts | Simple default shake; strawberries can replace mango |
-| Protein-rich shake / meal | banana + strawberries + Greek yogurt + cocoa + cottage cheese + optional protein powder | More filling and more training-friendly |
-| Lunch / dinner | potatoes + creamy garlic spinach + 2 fried eggs + cucumber | Default easy meat-free meal |
+Most meals should follow this structure:
 
-## Shopping list
+| Part | Examples |
+| --- | --- |
+| Protein | skyr, Greek yogurt, kefir, cottage cheese, eggs, lean meat |
+| Energy source | potatoes, rice, oats, banana, mango, berries |
+| Fruit or vegetables | cucumber, tomato, onion, spinach, asparagus, strawberries, raspberries, blueberries |
+| Simple preparation | smoothie, eggs with potatoes, meat with vegetables, cottage cheese with fruit |
 
-### Core items
+## Default meals
 
-- bananas
-- mango
-- strawberries
-- Greek yogurt
-- plain yogurt
-- cottage cheese
-- eggs
-- potatoes
-- spinach
-- regular cucumbers
-- onion
-- garlic
-- lemon
+| Meal | Default | Use when | Fallback |
+| --- | --- | --- | --- |
+| Breakfast smoothie | skyr or yogurt + banana + berries + cocoa + nuts | Normal morning or low-effort start. | banana + skyr |
+| Training-friendly smoothie | skyr or yogurt + fruit + cocoa + optional protein powder | Training day or higher hunger. | skyr + banana + protein powder |
+| Easy dinner | protein + potatoes or rice + vegetables | Main meal. | eggs + potatoes + cucumber |
+| Smooth supper | kefir or skyr + fruit + cottage cheese | Solid food feels too heavy or annoying. | kefir + banana |
+| Vegetable add-on | cucumber, tomato, onion, spinach, or asparagus | The day lacks vegetables. | cucumber with salt and lemon |
 
-### Useful add-ins
+## Food inventory
 
-- cocoa
-- nuts
-- peanut butter
-- oats
-- kefir / milk
+### Core foods
 
-## Rules
+| Category | Foods |
+| --- | --- |
+| Protein | skyr, Greek yogurt, plain yogurt, kefir, cottage cheese, eggs, sirloin or other lean meat |
+| Carbs and energy | potatoes, rice, oats, bananas, mango |
+| Fruit | strawberries, raspberries, blueberries |
+| Vegetables | cucumber, tomato, onion, spinach, asparagus, garlic, lemon |
+| Add-ins | cocoa, nuts, peanut butter, chia, protein powder |
 
-- Keep meals simple enough to repeat.
-- Prioritize protein in bigger meals.
-- Include an energy source such as potatoes, rice, oats, or fruit.
-- Include something fresh or plant-based such as spinach, cucumber, or fruit.
-- Use protein powder as support, not as the whole foundation of the diet.
-- Default to filling meals over random snacking.
+### Shopping logic
 
-## Eating notes
+| If this is missing | Buy this |
+| --- | --- |
+| Easy protein | skyr, kefir, cottage cheese, eggs |
+| Smoothie base | bananas, berries, yogurt or kefir |
+| Dinner base | potatoes or rice, eggs or meat |
+| Fresh food | cucumber, tomato, onion, spinach, asparagus |
+| Extra calories | oats, nuts, peanut butter |
 
-Date-based eating notes should live under `Me/Diet/` and use the `YYYY-MM-DD.md` format.
+## Operating rules
 
-### Current links
+| Rule | Why it matters |
+| --- | --- |
+| Keep meals simple enough to repeat. | A good meal I repeat beats a perfect meal I avoid. |
+| Prioritize protein in bigger meals. | It supports training, recovery, and hunger control. |
+| Use carbs deliberately. | Potatoes, rice, oats, and fruit help with energy. |
+| Add something fresh when possible. | Vegetables and fruit keep the day from becoming too narrow. |
+| Use protein powder as support. | If a meal already has skyr, kefir, cottage cheese, eggs, or meat, powder is usually optional. |
+| Prefer filling meals over random snacking. | Structure reduces noise. |
+| Smooth meals are valid. | A good smoothie is better than skipping food or eating nonsense. |
 
-- [session-2026-06-15.md](./Diet/session-2026-06-15.md) — breakfast smoothie with banana, strawberries, blueberries, milk, skyr, protein powder, cacao, and chia.
-- [session-2026-06-16.md](./Diet/session-2026-06-16.md) — breakfast smoothie with coconut milk, skyr, strawberries, raspberries, banana, cocoa, and cashews.
+## Daily logs
 
-### What to track
+Daily eating logs live under `Me/Diet/`.
 
-- what I ate
-- protein coverage
-- shopping gaps
-- energy and hunger
-- what was easy to repeat
+Each file covers one day. The date belongs only in the filename.
+
+Use this filename format:
+
+`session-YYYY-MM-DD.md`
+
+| Log | Summary |
+| --- | --- |
+| [session-2026-06-15.md](./Diet/session-2026-06-15.md) | Breakfast smoothie with banana, strawberries, blueberries, milk, skyr, protein powder, cacao, and chia. |
+| [session-2026-06-16.md](./Diet/session-2026-06-16.md) | Breakfast smoothie, sirloin dinner, and smooth supper. |
+
+## Tracking template
+
+Each daily log should stay short.
+
+| Track | Question |
+| --- | --- |
+| Food | What did I eat? |
+| Protein | Was protein covered? |
+| Fresh food | Did I eat fruit or vegetables? |
+| Energy and hunger | Was I stable, hungry, or too full? |
+| Shopping gaps | What was missing? |
+| Repeatability | What was easy enough to repeat? |
 
 ## Related
 
