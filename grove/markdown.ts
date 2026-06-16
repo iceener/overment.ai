@@ -150,6 +150,7 @@ function resolveInternalLink(
   currentFilePath: string,
   currentSlug: string,
   basenameMap?: Map<string, string>,
+  options: { relativeToCurrentFile?: boolean } = {},
 ): { slug: string; anchor?: string } | undefined {
   const target = rawTarget.trim();
   if (!target || PROTOCOL_RE.test(target)) return undefined;
@@ -173,8 +174,12 @@ function resolveInternalLink(
   }
 
   let resolved = pathPart.replaceAll("\\", "/").trim();
-  if (resolved.startsWith("/")) resolved = resolved.slice(1);
-  if (resolved.startsWith("./") || resolved.startsWith("../")) {
+  const isRootRelative = resolved.startsWith("/");
+  if (isRootRelative) resolved = resolved.slice(1);
+  if (
+    !isRootRelative &&
+    (options.relativeToCurrentFile || resolved.startsWith("./") || resolved.startsWith("../"))
+  ) {
     resolved = posix.normalize(posix.join(currentDir, resolved));
   }
 
@@ -291,7 +296,13 @@ function rewriteMarkdownMdLinks(
       return match;
     }
 
-    const resolved = resolveInternalLink(target, currentFilePath, currentSlug);
+    const resolved = resolveInternalLink(
+      target,
+      currentFilePath,
+      currentSlug,
+      undefined,
+      { relativeToCurrentFile: true },
+    );
     if (!resolved) return match;
 
     const href = buildRelativeHref(currentSlug, resolved.slug, resolved.anchor);
